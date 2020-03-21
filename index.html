@@ -163,7 +163,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/linux%E5%86%85%E6%A0%B8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/">
+    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/21/kafka-oom-2020-3-21/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/timg.jpg">
@@ -177,7 +177,85 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/18/linux%E5%86%85%E6%A0%B8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/" class="post-title-link" itemprop="url">linux内核学习笔记.1</a>
+            <a href="/2020/03/21/kafka-oom-2020-3-21/" class="post-title-link" itemprop="url">实际工作中疑难踩坑记录-kafka-oom</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-21 21:43:51 / 修改时间：23:51:23" itemprop="dateCreated datePublished" datetime="2020-03-21T21:43:51+08:00">2020-03-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">工作记录</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="故障情况"><a href="#故障情况" class="headerlink" title="故障情况:"></a>故障情况:</h1><p>　　这周的周五下午,收到监控发来的告警kafka集群出现了性能故障,其中一个节点显示宕机,登上kafka-manager的web页面看到集群broker确实是少了一个,且整体吞吐量较平时正常工作的时候下降了大概60%-70%,这样的集群肯定是存在问题的.于是登陆宕机服务器查看具体情况.通过大致时间发现了日志显示</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">46</span>,<span class="number">235</span>] ERROR Uncaught exception <span class="keyword">in</span> thread <span class="string">'kafka-request-handler-7'</span>: (org.apache.kafka.common.utils.KafkaThread)</span><br><span class="line">java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">46</span>,<span class="number">235</span>] INFO Deleting index /home/kafka_2<span class="number">.11</span><span class="number">-1.0</span><span class="number">.0</span>/kafka-logs/syslog<span class="number">-47</span>/<span class="number">00000000000665219232.</span>timeindex.deleted (kafka.log.TimeIndex)</span><br><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">49</span>,<span class="number">232</span>] ERROR [KafkaApi<span class="number">-1</span>] Error when handling request &#123;replica_id=<span class="number">-1</span>,max_wait_time=<span class="number">0</span>,min_bytes=<span class="number">0</span>,topics=[&#123;topic=syslog,partitions=[&#123;partition=<span class="number">17</span>,fetch_offset=<span class="number">667368653</span>,max_bytes=<span class="number">1048576</span>&#125;]&#125;]&#125; (kafka.server.KafkaApis)</span><br><span class="line">java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">49</span>,<span class="number">232</span>] ERROR [KafkaApi<span class="number">-1</span>] Error when handling request &#123;replica_id=<span class="number">-1</span>,max_wait_time=<span class="number">0</span>,min_bytes=<span class="number">0</span>,topics=[&#123;topic=syslog,partitions=[&#123;partition=<span class="number">35</span>,fetch_offset=<span class="number">668972130</span>,max_bytes=<span class="number">1048576</span>&#125;]&#125;]&#125; (kafka.server.KafkaApis)</span><br><span class="line">java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">49</span>,<span class="number">234</span>] ERROR [ThrottledRequestReaper-Request]: Error due to (kafka.server.ClientQuotaManager$ThrottledRequestReaper)</span><br><span class="line">java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.addConditionWaiter(AbstractQueuedSynchronizer.java:<span class="number">1855</span>)</span><br><span class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:<span class="number">2068</span>)</span><br><span class="line">	at java.util.concurrent.DelayQueue.poll(DelayQueue.java:<span class="number">259</span>)</span><br><span class="line">	at kafka.server.ClientQuotaManager$ThrottledRequestReaper.doWork(ClientQuotaManager.scala:<span class="number">137</span>)</span><br><span class="line">	at kafka.utils.ShutdownableThread.run(ShutdownableThread.scala:<span class="number">64</span>)</span><br><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">49</span>,<span class="number">234</span>] ERROR [ExpirationReaper<span class="number">-1</span>-Fetch]: Error due to (kafka.server.DelayedOperationPurgatory$ExpiredOperationReaper)</span><br><span class="line">java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.addConditionWaiter(AbstractQueuedSynchronizer.java:<span class="number">1855</span>)</span><br><span class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:<span class="number">2068</span>)</span><br><span class="line">	at java.util.concurrent.DelayQueue.poll(DelayQueue.java:<span class="number">259</span>)</span><br><span class="line">	at kafka.utils.timer.SystemTimer.advanceClock(Timer.scala:<span class="number">105</span>)</span><br><span class="line">	at kafka.server.DelayedOperationPurgatory.advanceClock(DelayedOperation.scala:<span class="number">393</span>)</span><br><span class="line">	at kafka.server.DelayedOperationPurgatory$ExpiredOperationReaper.doWork(DelayedOperation.scala:<span class="number">417</span>)</span><br><span class="line">	at kafka.utils.ShutdownableThread.run(ShutdownableThread.scala:<span class="number">64</span>)</span><br><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">49</span>,<span class="number">234</span>] INFO [ExpirationReaper<span class="number">-1</span>-Fetch]: Stopped (kafka.server.DelayedOperationPurgatory$ExpiredOperationReaper)</span><br><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">49</span>,<span class="number">234</span>] INFO [ThrottledRequestReaper-Request]: Stopped (kafka.server.ClientQuotaManager$ThrottledRequestReaper)</span><br><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">49</span>,<span class="number">236</span>] ERROR [Transaction Marker Channel Manager <span class="number">1</span>]: unhandled exception caught <span class="keyword">in</span> InterBrokerSendThread (kafka.coordinator.transaction.TransactionMarkerChannelManager)</span><br><span class="line">java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">49</span>,<span class="number">237</span>] ERROR Uncaught exception <span class="keyword">in</span> scheduled task <span class="string">'highwatermark-checkpoint'</span> (kafka.utils.KafkaScheduler)</span><br><span class="line">java.lang.OutOfMemoryError: Java heap space</span><br></pre></td></tr></table></figure>
+<p>　　果然,日志上面记载的非常详细,java.lang.OutOfMemoryError: Java heap space,经典的JVM-OOM问题,显然肯定是系统内存IO有问题。</p>
+<h1 id="优化方法"><a href="#优化方法" class="headerlink" title="优化方法:"></a>优化方法:</h1><p>　　KAFKA集群其实在搭建的时候已经测试了蛮长时间,根据当时的测试效果已经优化了部分参数的,但是这次竟然出现了问题,说明优化肯定哪里还存在的问题。首先既然是jvmOutOfMemory了,先尝试把kafka的jvmheap大小上调,因为这几台kafka配置也不高,只有四核8G,之前分配的堆大小是1G,这次上调到2G。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@kafka-139 bin]<span class="comment"># vim kafka-server-start.sh</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"x<span class="variable">$KAFKA_HEAP_OPTS</span>"</span> = <span class="string">"x"</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">export</span> KAFKA_HEAP_OPTS=<span class="string">"-Xmx2G -Xms2G"</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<p>　　另外,这几台kafka当时吞吐量并不高,工作的时候当时对系统内存没有那么苛刻,为了性能考虑,当时禁用了swap,考虑到kafka除了要使用堆内测做java的gc及各种操作,还需要大量的堆外内存也就是系统分配给javajvm堆以外剩余的内存,因为kafka是将所有数据存储在内存中,之后flush到磁盘,堆外内存如果不够用也会影响到整个系统的稳定性从而影响系统上面的所有组件,当中也包括java的gc效率,所以综合考虑,开启了swap空间<br>,并做了swap的相关优化.此外查看了宿主服务器的空余内存发现,还有一点空余内存可供分配,于是给几台kafka从8G内存上调到了10G内存.</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[root@kafka-139 bin]</span><span class="comment"># swapon -a</span></span><br><span class="line"><span class="section">[root@kafka-139 bin]</span><span class="comment"># vim /etc/sysctl.conf</span></span><br><span class="line"><span class="attr">vm.swappiness</span> = <span class="number">1</span></span><br><span class="line"><span class="section">[root@kafka-139 bin]</span><span class="comment"># sysctl -p</span></span><br></pre></td></tr></table></figure>
+<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><p>1.kafka修改配置之后切忌不可全部同时重启所有broker,和所有分布式集群一样,需要单台重启,集群恢复之后再重启下一台,一直到所有节点重新重启过一遍后,集群恢复正常工作.<br>2.开启swap空间是临时选择,系统方面的优化最优选择还是直接增加虚拟机的实际内存,swap是磁盘虚拟出的内存拿来给系统做内存的冗余,类似于windows系统的虚拟内存,性能和内存相比极差,所以如果要开启必须做相关的优化,不然可能面临系统内存得到缓解,但是集群性能急剧下降的情况,这样就得不偿失负优化了.<br>3.所有配置做完24小时之内一直还没有出问题,不过发现swap确实已经开始使用了,虽然不多,但是说明kafka的堆外内存已经不太够用了.后续继续观察…如有变化再度更新.</p>
+<p>原文作者：<a href="https://yangfan-witcher.github.io/about/">Yang Fan</a><br>原文链接：<a href="https://yangfan-witcher.github.io/2020/03/21/kafka-oom-2020-3-21/">https://yangfan-witcher.github.io/2020/03/21/kafka-oom-2020-3-21/</a></p>
+<!--添加图片-->
+<p><img src="/img/dog1.jpg" alt=""></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/linuxkernel%20Learning%20notes-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/timg.jpg">
+      <meta itemprop="name" content="fan yang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨 泛 walking">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/18/linuxkernel%20Learning%20notes-1/" class="post-title-link" itemprop="url">linux内核学习笔记.1</a>
         </h1>
 
         <div class="post-meta">
@@ -230,7 +308,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/%E5%AE%9E%E9%99%85%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%96%91%E9%9A%BE%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95-1/">
+    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/Elasticsarch%20Learning%20notes-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/timg.jpg">
@@ -244,74 +322,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/18/%E5%AE%9E%E9%99%85%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%96%91%E9%9A%BE%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95-1/" class="post-title-link" itemprop="url">实际工作中疑难踩坑记录.1</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-03-18 21:43:51 / 修改时间：21:44:30" itemprop="dateCreated datePublished" datetime="2020-03-18T21:43:51+08:00">2020-03-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">工作记录</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/Elasticsarch%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/timg.jpg">
-      <meta itemprop="name" content="fan yang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨 泛 walking">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/18/Elasticsarch%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/" class="post-title-link" itemprop="url">Elasticsarch学习笔记.1</a>
+            <a href="/2020/03/18/Elasticsarch%20Learning%20notes-1/" class="post-title-link" itemprop="url">Elasticsarch学习笔记.1</a>
         </h1>
 
         <div class="post-meta">
@@ -364,7 +375,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/Redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/">
+    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/Redis%20Learning%20notes-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/timg.jpg">
@@ -378,7 +389,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/18/Redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/" class="post-title-link" itemprop="url">Redis学习笔记.1</a>
+            <a href="/2020/03/18/Redis%20Learning%20notes-1/" class="post-title-link" itemprop="url">Redis学习笔记.1</a>
         </h1>
 
         <div class="post-meta">
@@ -431,7 +442,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/Prometheus%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/">
+    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/Redis%20Learning%20notes-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/timg.jpg">
@@ -445,7 +456,81 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/18/Prometheus%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/" class="post-title-link" itemprop="url">Prometheus学习笔记.1</a>
+            <a href="/2020/03/18/Redis%20Learning%20notes-2/" class="post-title-link" itemprop="url">Redis学习笔记.2</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-18 21:39:02" itemprop="dateCreated datePublished" datetime="2020-03-18T21:39:02+08:00">2020-03-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-21 20:16:39" itemprop="dateModified" datetime="2020-03-21T20:16:39+08:00">2020-03-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>我现在写了一个段落，并且想在这个段落的某一个地方引入一张图片</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/Prometheus%20Learning%20notes-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/timg.jpg">
+      <meta itemprop="name" content="fan yang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨 泛 walking">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/18/Prometheus%20Learning%20notes-1/" class="post-title-link" itemprop="url">Prometheus学习笔记.1</a>
         </h1>
 
         <div class="post-meta">
@@ -498,7 +583,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/Kafka%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/">
+    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/Kafka%20Learning%20notes-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/timg.jpg">
@@ -512,7 +597,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/18/Kafka%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/" class="post-title-link" itemprop="url">Kafka学习笔记.1</a>
+            <a href="/2020/03/18/Kafka%20Learning%20notes-1/" class="post-title-link" itemprop="url">Kafka学习笔记.1</a>
         </h1>
 
         <div class="post-meta">
@@ -565,7 +650,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/">
+    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/Docker%20Learning%20notes-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/timg.jpg">
@@ -579,7 +664,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/18/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1/" class="post-title-link" itemprop="url">Docker学习笔记.1</a>
+            <a href="/2020/03/18/Docker%20Learning%20notes-1/" class="post-title-link" itemprop="url">Docker学习笔记.1</a>
         </h1>
 
         <div class="post-meta">
@@ -633,7 +718,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/15/DNS%E5%9C%B0%E5%9D%80%E6%8E%A8%E8%8D%90/">
+    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/15/DNS%20address%20recommendation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/timg.jpg">
@@ -647,7 +732,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/15/DNS%E5%9C%B0%E5%9D%80%E6%8E%A8%E8%8D%90/" class="post-title-link" itemprop="url">DNS地址推荐</a>
+            <a href="/2020/03/15/DNS%20address%20recommendation/" class="post-title-link" itemprop="url">DNS地址推荐</a>
         </h1>
 
         <div class="post-meta">
@@ -846,7 +931,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -859,7 +944,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
