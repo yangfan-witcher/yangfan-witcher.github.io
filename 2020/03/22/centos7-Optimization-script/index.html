@@ -20,18 +20,23 @@
     var CONFIG = {"hostname":"yangfan-witcher.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="Elasticsarch学习笔记.1">
-<meta property="og:url" content="https://yangfan-witcher.github.io/2020/03/18/Elasticsarch%20Learning%20notes-1/index.html">
+  <meta name="description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071#&#x2F;usr&#x2F;bin&#x2F;bash#防止cpu soft lockup sysctl -w kernel.watchdog_thresh&#x3D;3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux下centos7系统简单优化shell脚本">
+<meta property="og:url" content="https://yangfan-witcher.github.io/2020/03/22/centos7-Optimization-script/index.html">
 <meta property="og:site_name" content="杨 泛 walking">
-<meta property="article:published_time" content="2020-03-18T13:39:13.000Z">
-<meta property="article:modified_time" content="2020-03-18T13:41:20.302Z">
+<meta property="og:description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071#&#x2F;usr&#x2F;bin&#x2F;bash#防止cpu soft lockup sysctl -w kernel.watchdog_thresh&#x3D;3">
+<meta property="og:image" content="https://yangfan-witcher.github.io/img/dog1.jpg">
+<meta property="article:published_time" content="2020-03-22T15:16:31.000Z">
+<meta property="article:modified_time" content="2020-03-22T15:38:19.984Z">
 <meta property="article:author" content="fan yang">
-<meta property="article:tag" content="es">
-<meta property="article:tag" content="分布式">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="centos">
+<meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yangfan-witcher.github.io/img/dog1.jpg">
 
-<link rel="canonical" href="https://yangfan-witcher.github.io/2020/03/18/Elasticsarch%20Learning%20notes-1/">
+<link rel="canonical" href="https://yangfan-witcher.github.io/2020/03/22/centos7-Optimization-script/">
 
 
 <script id="page-configurations">
@@ -43,7 +48,7 @@
   };
 </script>
 
-  <title>Elasticsarch学习笔记.1 | 杨 泛 walking</title>
+  <title>linux下centos7系统简单优化shell脚本 | 杨 泛 walking</title>
   
 
 
@@ -167,7 +172,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/Elasticsarch%20Learning%20notes-1/">
+    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/22/centos7-Optimization-script/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/timg.jpg">
@@ -180,7 +185,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Elasticsarch学习笔记.1
+          linux下centos7系统简单优化shell脚本
         </h1>
 
         <div class="post-meta">
@@ -191,7 +196,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-03-18 21:39:13 / 修改时间：21:41:20" itemprop="dateCreated datePublished" datetime="2020-03-18T21:39:13+08:00">2020-03-18</time>
+              <time title="创建时间：2020-03-22 23:16:31 / 修改时间：23:38:19" itemprop="dateCreated datePublished" datetime="2020-03-22T23:16:31+08:00">2020-03-22</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -199,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Elasticsarch/" itemprop="url" rel="index"><span itemprop="name">Elasticsarch</span></a>
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
                 </span>
             </span>
 
@@ -214,7 +219,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#/usr/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#防止cpu soft lockup </span></span><br><span class="line">sysctl -w kernel.watchdog_thresh=<span class="number">30</span></span><br><span class="line">echo <span class="number">30</span> &gt; /<span class="keyword">proc</span>/sys/kernel/watchdog_thresh</span><br><span class="line"></span><br><span class="line"># 修改文件数限制</span><br><span class="line">cat &gt;&gt; /etc/security/limits.conf &lt;&lt;<span class="title"> yff</span></span><br><span class="line"><span class="title">*</span> hard<span class="title"> nofile</span> 265536</span><br><span class="line">*<span class="title"> soft</span> nofile 265536</span><br><span class="line">*<span class="title"> soft</span> memlock<span class="title"> unlimited</span></span><br><span class="line"><span class="title">*</span> hard<span class="title"> memlock</span> unlimited</span><br><span class="line">*<span class="title"> soft</span> nproc 65535</span><br><span class="line">*<span class="title"> hard</span> nproc 65535</span><br><span class="line">yff</span><br><span class="line"></span><br><span class="line">#修改用户进程限制</span><br><span class="line">sed -i "s/4096/65535/g" /etc/security/limits.d/*nproc.conf</span><br><span class="line"></span><br><span class="line">#内核优化</span><br><span class="line">echo -e "</span><br><span class="line">#内存方面优化</span><br><span class="line">vm.max_map_count=655360</span><br><span class="line">vm.dirty_background_ratio = 5</span><br><span class="line">vm.dirty_ratio = 10</span><br><span class="line">vm.swappiness = 1</span><br><span class="line">vm.min_free_kbytes = 409600</span><br><span class="line">kernel.pid_max=1000000</span><br><span class="line">fs.file-max = 1000000</span><br><span class="line">#network优化</span><br><span class="line">net.ipv6.conf.all.disable_ipv6 = 1</span><br><span class="line">net.ipv6.conf.default.disable_ipv6 = 1</span><br><span class="line">net.core.rmem_max = 67108864</span><br><span class="line">net.core.wmem_max = 67108864</span><br><span class="line">net.core.netdev_max_backlog = 250000</span><br><span class="line">net.core.somaxconn = 4096</span><br><span class="line">net.ipv4.tcp_syncookies = 1</span><br><span class="line">net.ipv4.tcp_tw_reuse = 1</span><br><span class="line">net.ipv4.tcp_tw_recycle = 1</span><br><span class="line">net.ipv4.tcp_fin_timeout = 30</span><br><span class="line">net.ipv4.tcp_keepalive_time = 1200</span><br><span class="line">net.ipv4.ip_local_port_range = 10000 65000</span><br><span class="line">net.ipv4.tcp_max_syn_backlog = 8192</span><br><span class="line">net.ipv4.tcp_max_tw_buckets = 5000</span><br><span class="line">net.ipv4.tcp_fastopen = 3</span><br><span class="line">net.ipv4.tcp_mem = 25600 51200 102400</span><br><span class="line">net.ipv4.tcp_rmem = 4096 87380 67108864</span><br><span class="line">net.ipv4.tcp_wmem = 4096 65536 67108864</span><br><span class="line">net.ipv4.tcp_mtu_probing = 1</span><br><span class="line">net.ipv4.tcp_congestion_control =<span class="title"> hybla</span></span><br><span class="line"><span class="title">net.core.rmem_default</span> = 262144</span><br><span class="line">net.core.wmem_default = 262144</span><br><span class="line">net.ipv4.tcp_max_orphans = 131072</span><br><span class="line">#是否开启路由转发可选注释</span><br><span class="line">#net.ipv4.ip_forward=0</span><br><span class="line">net.ipv4.tcp_sack = 0 " &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#关闭selinux</span><br><span class="line">setenforce 0</span><br><span class="line">sed -i "s/enforcing/disabled/g" /etc/selinux/config</span><br><span class="line"></span><br><span class="line">#常用工具yum</span><br><span class="line">yum -y<span class="title"> install</span> vim<span class="title"> wget</span> lrzsz<span class="title"> net-tools</span> epel-release<span class="title"> ntpdate</span> psmisc<span class="title"> iotop</span> sysstat</span><br><span class="line">#同步时区时间</span><br><span class="line">cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">ntpdate<span class="title"> time.windows.com</span></span><br><span class="line"><span class="title">hwclock</span> -w</span><br><span class="line"></span><br><span class="line">echo "******脚本执行完毕,部分配置重启系统生效*****"</span><br></pre></td></tr></table></figure>
+
+<!--添加图片-->
+<p><img src="/img/dog1.jpg" alt=""></p>
+
     </div>
 
     
@@ -223,8 +232,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/es/" rel="tag"># es</a>
-              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag"># 分布式</a>
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/centos/" rel="tag"># centos</a>
+              <a href="/tags/shell/" rel="tag"># shell</a>
           </div>
 
         
@@ -233,12 +243,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/03/18/Redis%20Learning%20notes-1/" rel="prev" title="Redis学习笔记.1">
-      <i class="fa fa-chevron-left"></i> Redis学习笔记.1
+    <a href="/2020/03/21/kafka-oom-2020-3-21/" rel="prev" title="实际工作中疑难踩坑记录-kafka-oom">
+      <i class="fa fa-chevron-left"></i> 实际工作中疑难踩坑记录-kafka-oom
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/03/18/linuxkernel%20Learning%20notes-1/" rel="next" title="linux内核学习笔记.1">
-      linux内核学习笔记.1 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/03/22/prometheus-grafana-1/" rel="next" title="prometheus+grafana整套监控系统部署方案-安装部署prometheus">
+      prometheus+grafana整套监控系统部署方案-安装部署prometheus <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>

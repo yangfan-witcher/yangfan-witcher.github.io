@@ -163,6 +163,154 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/22/prometheus-grafana-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/timg.jpg">
+      <meta itemprop="name" content="fan yang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨 泛 walking">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/22/prometheus-grafana-1/" class="post-title-link" itemprop="url">prometheus+grafana整套监控系统部署方案-安装部署prometheus</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-22 23:45:10" itemprop="dateCreated datePublished" datetime="2020-03-22T23:45:10+08:00">2020-03-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-23 00:16:47" itemprop="dateModified" datetime="2020-03-23T00:16:47+08:00">2020-03-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Prometheus/" itemprop="url" rel="index"><span itemprop="name">Prometheus</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <!--添加图片-->
+<h1 id="总览介绍"><a href="#总览介绍" class="headerlink" title="总览介绍"></a>总览介绍</h1><p>　　Prometheus是最初在SoundCloud上构建的开源系统监视和警报工具包 。自2012年成立以来，许多公司和组织都采用了Prometheus，该项目拥有非常活跃的开发人员和用户社区。现在，它是一个独立的开源项目，并且独立于任何公司进行维护。为了强调这一点并阐明项目的治理结构，Prometheus 在2016年加入了 Cloud Native Computing Foundation，这是继Kubernetes之后的第二个托管项目。<br>　　下图是摘自prometheus官方文档的prometheus整体监控系统运行框架:<br><img src="/img/prometheus1.png" alt=""><br>    拆分整体分析一下几个重要组件的功能:<br>    1.Prometheus-prometheus采集到的监控数据以metric（指标）形式保存在时序数据库中（TSDB)并提供查询接口,数据库可存储在本地也可以存储在远程。<br>    2.exporters-用于暴露已有的第三方服务的 metrics 以pull方式提供给 Prometheus。<br>    3.alertmanager-从 Prometheus接受告警alerts,进行分组路由发出警告,接受者包括e-mail,webhook等<br>    4.grafana-专业的可视化开源软件,支持导入prometheus数据源,对指标进行详细的可视化图表展示。</p>
+<h1 id="安装prometheus"><a href="#安装prometheus" class="headerlink" title="安装prometheus"></a>安装prometheus</h1><p>首先安装,直接前往官网下载tar包安装最为快速。官方也提供docker镜像安装,如果对docker比较熟悉,可以采用docker,本文档采用二进制包安装<br>官网下载地址 <a href="https://prometheus.io/download/" target="_blank" rel="noopener">https://prometheus.io/download/</a><br><img src="/img/prometheus2.png" alt=""></p>
+<p><img src="/img/name.jpg" alt=""></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/22/centos7-Optimization-script/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/timg.jpg">
+      <meta itemprop="name" content="fan yang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨 泛 walking">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/22/centos7-Optimization-script/" class="post-title-link" itemprop="url">linux下centos7系统简单优化shell脚本</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-22 23:16:31 / 修改时间：23:38:19" itemprop="dateCreated datePublished" datetime="2020-03-22T23:16:31+08:00">2020-03-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#/usr/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#防止cpu soft lockup </span></span><br><span class="line">sysctl -w kernel.watchdog_thresh=<span class="number">30</span></span><br><span class="line">echo <span class="number">30</span> &gt; /<span class="keyword">proc</span>/sys/kernel/watchdog_thresh</span><br><span class="line"></span><br><span class="line"># 修改文件数限制</span><br><span class="line">cat &gt;&gt; /etc/security/limits.conf &lt;&lt;<span class="title"> yff</span></span><br><span class="line"><span class="title">*</span> hard<span class="title"> nofile</span> 265536</span><br><span class="line">*<span class="title"> soft</span> nofile 265536</span><br><span class="line">*<span class="title"> soft</span> memlock<span class="title"> unlimited</span></span><br><span class="line"><span class="title">*</span> hard<span class="title"> memlock</span> unlimited</span><br><span class="line">*<span class="title"> soft</span> nproc 65535</span><br><span class="line">*<span class="title"> hard</span> nproc 65535</span><br><span class="line">yff</span><br><span class="line"></span><br><span class="line">#修改用户进程限制</span><br><span class="line">sed -i "s/4096/65535/g" /etc/security/limits.d/*nproc.conf</span><br><span class="line"></span><br><span class="line">#内核优化</span><br><span class="line">echo -e "</span><br><span class="line">#内存方面优化</span><br><span class="line">vm.max_map_count=655360</span><br><span class="line">vm.dirty_background_ratio = 5</span><br><span class="line">vm.dirty_ratio = 10</span><br><span class="line">vm.swappiness = 1</span><br><span class="line">vm.min_free_kbytes = 409600</span><br><span class="line">kernel.pid_max=1000000</span><br><span class="line">fs.file-max = 1000000</span><br><span class="line">#network优化</span><br><span class="line">net.ipv6.conf.all.disable_ipv6 = 1</span><br><span class="line">net.ipv6.conf.default.disable_ipv6 = 1</span><br><span class="line">net.core.rmem_max = 67108864</span><br><span class="line">net.core.wmem_max = 67108864</span><br><span class="line">net.core.netdev_max_backlog = 250000</span><br><span class="line">net.core.somaxconn = 4096</span><br><span class="line">net.ipv4.tcp_syncookies = 1</span><br><span class="line">net.ipv4.tcp_tw_reuse = 1</span><br><span class="line">net.ipv4.tcp_tw_recycle = 1</span><br><span class="line">net.ipv4.tcp_fin_timeout = 30</span><br><span class="line">net.ipv4.tcp_keepalive_time = 1200</span><br><span class="line">net.ipv4.ip_local_port_range = 10000 65000</span><br><span class="line">net.ipv4.tcp_max_syn_backlog = 8192</span><br><span class="line">net.ipv4.tcp_max_tw_buckets = 5000</span><br><span class="line">net.ipv4.tcp_fastopen = 3</span><br><span class="line">net.ipv4.tcp_mem = 25600 51200 102400</span><br><span class="line">net.ipv4.tcp_rmem = 4096 87380 67108864</span><br><span class="line">net.ipv4.tcp_wmem = 4096 65536 67108864</span><br><span class="line">net.ipv4.tcp_mtu_probing = 1</span><br><span class="line">net.ipv4.tcp_congestion_control =<span class="title"> hybla</span></span><br><span class="line"><span class="title">net.core.rmem_default</span> = 262144</span><br><span class="line">net.core.wmem_default = 262144</span><br><span class="line">net.ipv4.tcp_max_orphans = 131072</span><br><span class="line">#是否开启路由转发可选注释</span><br><span class="line">#net.ipv4.ip_forward=0</span><br><span class="line">net.ipv4.tcp_sack = 0 " &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#关闭selinux</span><br><span class="line">setenforce 0</span><br><span class="line">sed -i "s/enforcing/disabled/g" /etc/selinux/config</span><br><span class="line"></span><br><span class="line">#常用工具yum</span><br><span class="line">yum -y<span class="title"> install</span> vim<span class="title"> wget</span> lrzsz<span class="title"> net-tools</span> epel-release<span class="title"> ntpdate</span> psmisc<span class="title"> iotop</span> sysstat</span><br><span class="line">#同步时区时间</span><br><span class="line">cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">ntpdate<span class="title"> time.windows.com</span></span><br><span class="line"><span class="title">hwclock</span> -w</span><br><span class="line"></span><br><span class="line">echo "******脚本执行完毕,部分配置重启系统生效*****"</span><br></pre></td></tr></table></figure>
+
+<!--添加图片-->
+<p><img src="/img/dog1.jpg" alt=""></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/21/kafka-oom-2020-3-21/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -186,10 +334,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-21 21:43:51 / 修改时间：23:51:23" itemprop="dateCreated datePublished" datetime="2020-03-21T21:43:51+08:00">2020-03-21</time>
+              <time title="创建时间：2020-03-21 21:43:51" itemprop="dateCreated datePublished" datetime="2020-03-21T21:43:51+08:00">2020-03-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-22 20:57:49" itemprop="dateModified" datetime="2020-03-22T20:57:49+08:00">2020-03-22</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -215,7 +369,7 @@
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">46</span>,<span class="number">235</span>] ERROR Uncaught exception <span class="keyword">in</span> thread <span class="string">'kafka-request-handler-7'</span>: (org.apache.kafka.common.utils.KafkaThread)</span><br><span class="line">java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">46</span>,<span class="number">235</span>] INFO Deleting index /home/kafka_2<span class="number">.11</span><span class="number">-1.0</span><span class="number">.0</span>/kafka-logs/syslog<span class="number">-47</span>/<span class="number">00000000000665219232.</span>timeindex.deleted (kafka.log.TimeIndex)</span><br><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">49</span>,<span class="number">232</span>] ERROR [KafkaApi<span class="number">-1</span>] Error when handling request &#123;replica_id=<span class="number">-1</span>,max_wait_time=<span class="number">0</span>,min_bytes=<span class="number">0</span>,topics=[&#123;topic=syslog,partitions=[&#123;partition=<span class="number">17</span>,fetch_offset=<span class="number">667368653</span>,max_bytes=<span class="number">1048576</span>&#125;]&#125;]&#125; (kafka.server.KafkaApis)</span><br><span class="line">java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">49</span>,<span class="number">232</span>] ERROR [KafkaApi<span class="number">-1</span>] Error when handling request &#123;replica_id=<span class="number">-1</span>,max_wait_time=<span class="number">0</span>,min_bytes=<span class="number">0</span>,topics=[&#123;topic=syslog,partitions=[&#123;partition=<span class="number">35</span>,fetch_offset=<span class="number">668972130</span>,max_bytes=<span class="number">1048576</span>&#125;]&#125;]&#125; (kafka.server.KafkaApis)</span><br><span class="line">java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">49</span>,<span class="number">234</span>] ERROR [ThrottledRequestReaper-Request]: Error due to (kafka.server.ClientQuotaManager$ThrottledRequestReaper)</span><br><span class="line">java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.addConditionWaiter(AbstractQueuedSynchronizer.java:<span class="number">1855</span>)</span><br><span class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:<span class="number">2068</span>)</span><br><span class="line">	at java.util.concurrent.DelayQueue.poll(DelayQueue.java:<span class="number">259</span>)</span><br><span class="line">	at kafka.server.ClientQuotaManager$ThrottledRequestReaper.doWork(ClientQuotaManager.scala:<span class="number">137</span>)</span><br><span class="line">	at kafka.utils.ShutdownableThread.run(ShutdownableThread.scala:<span class="number">64</span>)</span><br><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">49</span>,<span class="number">234</span>] ERROR [ExpirationReaper<span class="number">-1</span>-Fetch]: Error due to (kafka.server.DelayedOperationPurgatory$ExpiredOperationReaper)</span><br><span class="line">java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.addConditionWaiter(AbstractQueuedSynchronizer.java:<span class="number">1855</span>)</span><br><span class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:<span class="number">2068</span>)</span><br><span class="line">	at java.util.concurrent.DelayQueue.poll(DelayQueue.java:<span class="number">259</span>)</span><br><span class="line">	at kafka.utils.timer.SystemTimer.advanceClock(Timer.scala:<span class="number">105</span>)</span><br><span class="line">	at kafka.server.DelayedOperationPurgatory.advanceClock(DelayedOperation.scala:<span class="number">393</span>)</span><br><span class="line">	at kafka.server.DelayedOperationPurgatory$ExpiredOperationReaper.doWork(DelayedOperation.scala:<span class="number">417</span>)</span><br><span class="line">	at kafka.utils.ShutdownableThread.run(ShutdownableThread.scala:<span class="number">64</span>)</span><br><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">49</span>,<span class="number">234</span>] INFO [ExpirationReaper<span class="number">-1</span>-Fetch]: Stopped (kafka.server.DelayedOperationPurgatory$ExpiredOperationReaper)</span><br><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">49</span>,<span class="number">234</span>] INFO [ThrottledRequestReaper-Request]: Stopped (kafka.server.ClientQuotaManager$ThrottledRequestReaper)</span><br><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">49</span>,<span class="number">236</span>] ERROR [Transaction Marker Channel Manager <span class="number">1</span>]: unhandled exception caught <span class="keyword">in</span> InterBrokerSendThread (kafka.coordinator.transaction.TransactionMarkerChannelManager)</span><br><span class="line">java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">[<span class="number">2020</span><span class="number">-03</span><span class="number">-20</span> <span class="number">15</span>:<span class="number">25</span>:<span class="number">49</span>,<span class="number">237</span>] ERROR Uncaught exception <span class="keyword">in</span> scheduled task <span class="string">'highwatermark-checkpoint'</span> (kafka.utils.KafkaScheduler)</span><br><span class="line">java.lang.OutOfMemoryError: Java heap space</span><br></pre></td></tr></table></figure>
 <p>　　果然,日志上面记载的非常详细,java.lang.OutOfMemoryError: Java heap space,经典的JVM-OOM问题,显然肯定是系统内存IO有问题。</p>
 <h1 id="优化方法"><a href="#优化方法" class="headerlink" title="优化方法:"></a>优化方法:</h1><p>　　KAFKA集群其实在搭建的时候已经测试了蛮长时间,根据当时的测试效果已经优化了部分参数的,但是这次竟然出现了问题,说明优化肯定哪里还存在的问题。首先既然是jvmOutOfMemory了,先尝试把kafka的jvmheap大小上调,因为这几台kafka配置也不高,只有四核8G,之前分配的堆大小是1G,这次上调到2G。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@kafka-139 bin]<span class="comment"># vim kafka-server-start.sh</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"x<span class="variable">$KAFKA_HEAP_OPTS</span>"</span> = <span class="string">"x"</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">export</span> KAFKA_HEAP_OPTS=<span class="string">"-Xmx2G -Xms2G"</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@kafka-139 bin]<span class="comment"># vim kafka-server-start.sh</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"x<span class="variable">$KAFKA_HEAP_OPTS</span>"</span> = <span class="string">"x"</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">export</span> KAFKA_HEAP_OPTS=<span class="string">"-Xmx2G -Xms2G -Xmn800M"</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
 <p>　　另外,这几台kafka当时吞吐量并不高,工作的时候当时对系统内存没有那么苛刻,为了性能考虑,当时禁用了swap,考虑到kafka除了要使用堆内测做java的gc及各种操作,还需要大量的堆外内存也就是系统分配给javajvm堆以外剩余的内存,因为kafka是将所有数据存储在内存中,之后flush到磁盘,堆外内存如果不够用也会影响到整个系统的稳定性从而影响系统上面的所有组件,当中也包括java的gc效率,所以综合考虑,开启了swap空间<br>,并做了swap的相关优化.此外查看了宿主服务器的空余内存发现,还有一点空余内存可供分配,于是给几台kafka从8G内存上调到了10G内存.</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[root@kafka-139 bin]</span><span class="comment"># swapon -a</span></span><br><span class="line"><span class="section">[root@kafka-139 bin]</span><span class="comment"># vim /etc/sysctl.conf</span></span><br><span class="line"><span class="attr">vm.swappiness</span> = <span class="number">1</span></span><br><span class="line"><span class="section">[root@kafka-139 bin]</span><span class="comment"># sysctl -p</span></span><br></pre></td></tr></table></figure>
 <h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><p>1.kafka修改配置之后切忌不可全部同时重启所有broker,和所有分布式集群一样,需要单台重启,集群恢复之后再重启下一台,一直到所有节点重新重启过一遍后,集群恢复正常工作.<br>2.开启swap空间是临时选择,系统方面的优化最优选择还是直接增加虚拟机的实际内存,swap是磁盘虚拟出的内存拿来给系统做内存的冗余,类似于windows系统的虚拟内存,性能和内存相比极差,所以如果要开启必须做相关的优化,不然可能面临系统内存得到缓解,但是集群性能急剧下降的情况,这样就得不偿失负优化了.<br>3.所有配置做完24小时之内一直还没有出问题,不过发现swap确实已经开始使用了,虽然不多,但是说明kafka的堆外内存已经不太够用了.后续继续观察…如有变化再度更新.</p>
@@ -714,157 +868,12 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/15/DNS%20address%20recommendation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/timg.jpg">
-      <meta itemprop="name" content="fan yang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨 泛 walking">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/15/DNS%20address%20recommendation/" class="post-title-link" itemprop="url">DNS地址推荐</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-15 23:27:33" itemprop="dateCreated datePublished" datetime="2020-03-15T23:27:33+08:00">2020-03-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-18 21:39:30" itemprop="dateModified" datetime="2020-03-18T21:39:30+08:00">2020-03-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>境内公共DNS推荐<br>名称    首选地址    备选地址<br>114 DNS    114.114.114.114    114.114.115.115<br>阿里DNS    223.5.5.5    223.6.6.6<br>百度DNS    180.76.76.76<br>腾讯DNS    119.29.29.29    182.254.116.116<br>其余DNS在此不做推荐<br>境外公共DNS<br>名称    首选地址    备选地址<br>Cloudflare &amp; APNIC    1.1.1.1    1.0.0.1<br>谷歌DNS    8.8.8.8    8.8.4.4<br>OpenDNS    208.67.222.222    208.67.220.220<br>微软DNS    4.2.2.1    4.2.2.2<br>其余DNS在此不做推荐<br>无污染DNS<br>名称    首选地址    备选地址<br>PdomoDNS    101.132.183.99    193.112.15.186<br>Pure DNS    123.207.13.111    123.207.137.88<br>FunDNS    119.23.248.241    106.14.150.27<br>BAIDNS    106.14.152.170    223.113.97.99</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/15/First-Post/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/timg.jpg">
-      <meta itemprop="name" content="fan yang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨 泛 walking">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/15/First-Post/" class="post-title-link" itemprop="url">First-Post</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-15 23:06:02" itemprop="dateCreated datePublished" datetime="2020-03-15T23:06:02+08:00">2020-03-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-18 21:40:27" itemprop="dateModified" datetime="2020-03-18T21:40:27+08:00">2020-03-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%BF%83%E6%83%85%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">心情随笔</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p> &emsp;&emsp;呦西,捣鼓了一下hexo,新博客上线了,之前是在腾讯云自己买的服务器,买的域名搭的Wordpress博客,写了陆陆续续大概有一年半，因为经费和管理的问题,最后服务器到期了也没续费,当时因为工作也是特别的忙,每天也是下班直接倒头就睡,结果服务器到期数据也忘了取（当时也有段时间没更新博客了,都快忘了有这茬）,结果里面写的一些文档包括个人的日记周记都没了,属实有点可惜。<br> &emsp;&emsp;最近网上看到GitHub也有免费的博客,就想着到这里写写试试,关键是不需要钱,哈哈.所以这是我在这里写下的第一篇博客。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
 
@@ -931,20 +940,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
