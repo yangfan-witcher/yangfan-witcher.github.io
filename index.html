@@ -163,6 +163,79 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/05/07/Server%20failure-2020-5-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/timg.jpg">
+      <meta itemprop="name" content="fan yang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨 泛 walking">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/07/Server%20failure-2020-5-3/" class="post-title-link" itemprop="url">五一假期服务器事故</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-05-07 00:07:57 / 修改时间：00:54:05" itemprop="dateCreated datePublished" datetime="2020-05-07T00:07:57+08:00">2020-05-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">工作记录</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="故障情况"><a href="#故障情况" class="headerlink" title="故障情况:"></a>故障情况:</h1><p>　　五一假期本来过得好好的，没想到3号收到系统发来的告警，线上有业务故障，同时prometheus发来告警,显示有6.7台节点宕机,幸好人就在家电脑就在身边,赶紧登陆到公司网络尝试直接ssh故障节点机器连接不上，ping节点不通，登陆vcenter webui 查看物理服务器，发现异常卡顿。这台服务器的所有虚拟机连接控制台全部黑屏，而且在vc上面对这台服务器的所有操作都异常的缓慢,这台esxi系统的服务器肯定出了些问题。但是观察这台服务器上的虚拟机节点情况，down了一台redis节点,一台mysql节点,一台ES节点，三台业务探针服务器，以及一台用于调试的和生产无关的虚拟机。redis是哨兵集群，mysql做了主从和mha，es是分布式的讲道理宕机对线上业务应该不会有太大的影响，联系公司领导和开发,最后确定是业务一个环节没做redis的故障切换重连，一直在宕机的那台redis节点报错连接超时。</p>
+<h1 id="故障处理"><a href="#故障处理" class="headerlink" title="故障处理"></a>故障处理</h1><pre><code>因为物理服务器故障原因较难定位，恢复速度也需要时间，线上业务并无影响，优先处理业务故障。</code></pre><p>临时解决方法,对一直在尝试连接报错redis节点的业务进程批量重启（批量重复节点任务可以使用ansible的playbook）重新连接sentinel，建立redis连接。后续处理交给开发调试观察。<br>    物理服务器的排查比较困难，因为之前提到的操作异常缓慢，导致点击一下虚拟机切换视图都需要<br>卡半分钟，这时候发现这台esxi开启了ssh端口，于是用xshell连接。连接之后发现操作也是同样卡顿，ls操作直接卡死，这时候怀疑是不是磁盘出了问题，因为一般ls操作到磁盘IO文件，之前也遇到过类似的情况，实在没办法，reboot 之后半小时没收到存活的端口。怀疑没启动成功，准备联系领导通知机房人员重启服务器，突然这台esxi又重新加入了vc,看来重启时间有点长。之后在esxiweb上发现了一个情况，那就是有块vmfs-5的虚拟磁盘存在异常情况,一会可用一会报错不可用，一会显示总量0，一会显示可用0，一会又正常，甚是诡异，在esxi的shell上面也是如此，只要涉及到这块磁盘的io操作，终端就会失去响应，实在无奈遂卸载删除，web操作还各种报错，还好在shell上强制删除成功，本来想着把磁盘里面的虚拟机数据文件拷贝出来，但是无奈IO操作卡死。于是放弃。还好这台服务器不止一块盘，之后的时间在其他的磁盘上重建了宕机的故障节点（可以在vc上的其他服务器虚拟机克隆过来可以减少很大的前期操作）es节点，redis节点，加入非常简单，mysql节点重新加入主从，mha检测各节点正常之后重启工作。</p>
+<h1 id="反思与注意事项"><a href="#反思与注意事项" class="headerlink" title="反思与注意事项"></a>反思与注意事项</h1><p>1.服务器有多块磁盘,应该做raid盘,这台近两年前的服务器在当初装系统的时候没有做raid，是很大的失误，如果做了raid-5或者raid-1的话，可能这次故障就可以避免，不过说来也稀奇，我都不记得这台服务器当初是怎么安装系统的了，为什么会没有做raid我都记不清了。甚至我都怀疑是不是我自己安装的。。。。因为后面我安装的所有esxi系统，服务器都是做了raid-5的。不过这也是一个教训和经验。<br>2.虚拟机克隆开机一定要先取消网卡挂载，在编辑里把网卡的√取消,开机进系统改了IP之后再勾上。切记切记，不然会影响线上正常的业务，包括一些进程的配置文件中配置的监听绑定IP之类的。切记切记！！！克隆之后的配置文件记得还原成宕机的那台的配置文件。<br>3.mysql虚拟机克隆之后还需要特别注意的修改auto.conf的uuid,每台节点唯一,不然主从报错。<br>.后续继续观察…如有变化再度更新.</p>
+<p>原文作者：<a href="https://yangfan-witcher.github.io/about/">Yang Fan</a><br>原文链接：<a href="https://yangfan-witcher.github.io/2020/03/21/kafka-oom-2020-3-21/">https://yangfan-witcher.github.io/2020/03/21/kafka-oom-2020-3-21/</a></p>
+<!--添加图片-->
+<p><img src="/img/dog1.jpg" alt=""></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/22/prometheus-grafana-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -177,7 +250,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/22/prometheus-grafana-1/" class="post-title-link" itemprop="url">prometheus+grafana整套监控系统部署方案-安装部署prometheus</a>
+            <a href="/2020/03/22/prometheus-grafana-1/" class="post-title-link" itemprop="url">Prometheus+Grafana整套监控系统部署方案(1)-安装部署prometheus</a>
         </h1>
 
         <div class="post-meta">
@@ -194,7 +267,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 00:16:47" itemprop="dateModified" datetime="2020-03-23T00:16:47+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-24 00:12:08" itemprop="dateModified" datetime="2020-03-24T00:12:08+08:00">2020-03-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,9 +292,11 @@
       
           <!--添加图片-->
 <h1 id="总览介绍"><a href="#总览介绍" class="headerlink" title="总览介绍"></a>总览介绍</h1><p>　　Prometheus是最初在SoundCloud上构建的开源系统监视和警报工具包 。自2012年成立以来，许多公司和组织都采用了Prometheus，该项目拥有非常活跃的开发人员和用户社区。现在，它是一个独立的开源项目，并且独立于任何公司进行维护。为了强调这一点并阐明项目的治理结构，Prometheus 在2016年加入了 Cloud Native Computing Foundation，这是继Kubernetes之后的第二个托管项目。<br>　　下图是摘自prometheus官方文档的prometheus整体监控系统运行框架:<br><img src="/img/prometheus1.png" alt=""><br>    拆分整体分析一下几个重要组件的功能:<br>    1.Prometheus-prometheus采集到的监控数据以metric（指标）形式保存在时序数据库中（TSDB)并提供查询接口,数据库可存储在本地也可以存储在远程。<br>    2.exporters-用于暴露已有的第三方服务的 metrics 以pull方式提供给 Prometheus。<br>    3.alertmanager-从 Prometheus接受告警alerts,进行分组路由发出警告,接受者包括e-mail,webhook等<br>    4.grafana-专业的可视化开源软件,支持导入prometheus数据源,对指标进行详细的可视化图表展示。</p>
-<h1 id="安装prometheus"><a href="#安装prometheus" class="headerlink" title="安装prometheus"></a>安装prometheus</h1><p>首先安装,直接前往官网下载tar包安装最为快速。官方也提供docker镜像安装,如果对docker比较熟悉,可以采用docker,本文档采用二进制包安装<br>官网下载地址 <a href="https://prometheus.io/download/" target="_blank" rel="noopener">https://prometheus.io/download/</a><br><img src="/img/prometheus2.png" alt=""></p>
-<p><img src="/img/name.jpg" alt=""></p>
-
+<h1 id="网络规划"><a href="#网络规划" class="headerlink" title="网络规划"></a>网络规划</h1><p>　　我用两台centos7虚拟机做最小的模拟实验<br>    192.168.88.128 prometheus+alertmanager+grafana<br>    192.168.88.129 exporter</p>
+<h1 id="安装prometheus"><a href="#安装prometheus" class="headerlink" title="安装prometheus"></a>安装prometheus</h1><p>　　首先安装,直接前往官网下载tar包安装最为快速。官方也提供docker镜像安装,如果对docker比较熟悉,可以采用docker,本文档采用二进制包安装官网下载地址 <a href="https://prometheus.io/download/,顺便把要用到的alertmanager组件和node_exporter组件也下载了" target="_blank" rel="noopener">https://prometheus.io/download/,顺便把要用到的alertmanager组件和node_exporter组件也下载了</a><br><img src="/img/prometheus2.png" alt=""><br><img src="/img/prometheus3.png" alt=""><br><img src="/img/prometheus4.png" alt=""><br>把prometheus和alertmanager的安装包上传到192.168.88.128虚拟机的/home/soft目录下,node_exporter上传到129的/home/soft目录下<br>解压压缩包到/home目录下<br>tar zxvf prometheus-2.17.0-rc.4.linux-amd64.tar.gz -C /home<br>更改文件夹名字为prometheus<br>mv /home/prometheus-2.17.0-rc.4.linux-amd64 prometheus<br>进入目录查看目录结构<br>cd /home/prometheus;ls</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@localhost</span> prometheus]<span class="meta"># cd /home/prometheus<span class="comment">;ls</span></span></span><br><span class="line">console_libraries  consoles  LICENSE  NOTICE  prometheus  prometheus.yml  promtool  tsdb</span><br></pre></td></tr></table></figure>
+<p>prometheus 可执行文件<br>prometheus.yml 默认配置文件<br>编辑默认配置文件<br>vim prometheus.yml</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># my global config</span></span><br><span class="line">global:</span><br><span class="line">  scrape_interval:     15s # <span class="builtin-name">Set</span> the scrape interval <span class="keyword">to</span> every 15 seconds.<span class="built_in"> Default </span>is every 1 minute.</span><br><span class="line">  evaluation_interval: 15s # Evaluate rules every 15 seconds. The<span class="built_in"> default </span>is every 1 minute.</span><br><span class="line">  # scrape_timeout is <span class="builtin-name">set</span> <span class="keyword">to</span> the global<span class="built_in"> default </span>(10s).</span><br><span class="line"></span><br><span class="line"><span class="comment">##global 全局配置,配置之后为下方各节点的默认参数,在配置具体监控节点时可覆盖配置</span></span><br><span class="line"><span class="comment">##scrape_interval 采集时间间隔,prometheus定时主动pull获取数据,网络资源充足时可减小该值,网络状况不良可增大该值,如要不同节点设置不同拉取时间可在各自Job下方配置</span></span><br><span class="line"><span class="comment">##evaluation_interval 告警时间间隔,每隔固定时间检测一次告警rule规则匹配</span></span><br><span class="line"><span class="comment">##scrape_timeout 采集数据超时时间,同采集间隔,网络状况不良可增大该值</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Alertmanager configuration</span></span><br><span class="line">alerting:</span><br><span class="line">  alertmanagers:</span><br><span class="line">  - static_configs:</span><br><span class="line">    - targets:</span><br><span class="line">      # - alertmanager:9093</span><br><span class="line"></span><br><span class="line"><span class="comment"># Load rules once and periodically evaluate them according to the global 'evaluation_interval'.</span></span><br><span class="line">rule_files:</span><br><span class="line">  # - <span class="string">"first_rules.yml"</span></span><br><span class="line">  # - <span class="string">"second_rules.yml"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># A scrape configuration containing exactly one endpoint to scrape:</span></span><br><span class="line"><span class="comment"># Here it's Prometheus itself.</span></span><br><span class="line">scrape_configs:</span><br><span class="line">  # The job name is added as a label `<span class="attribute">job</span>=&lt;job_name&gt;` <span class="keyword">to</span> any timeseries scraped <span class="keyword">from</span> this config.</span><br><span class="line">  - job_name: <span class="string">'prometheus'</span></span><br><span class="line"></span><br><span class="line">    # metrics_path defaults <span class="keyword">to</span> <span class="string">'/metrics'</span></span><br><span class="line">    # scheme defaults <span class="keyword">to</span> <span class="string">'http'</span>.</span><br><span class="line"></span><br><span class="line">    static_configs:</span><br><span class="line">    - targets: [<span class="string">'localhost:9090'</span>]</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -800,74 +875,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/Docker%20Learning%20notes-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/timg.jpg">
-      <meta itemprop="name" content="fan yang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨 泛 walking">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/18/Docker%20Learning%20notes-1/" class="post-title-link" itemprop="url">Docker学习笔记.1</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-03-18 21:28:59 / 修改时间：21:39:34" itemprop="dateCreated datePublished" datetime="2020-03-18T21:28:59+08:00">2020-03-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>111</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -940,7 +947,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -953,7 +960,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -20,26 +20,34 @@
     var CONFIG = {"hostname":"yangfan-witcher.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="杨 泛 walking">
-<meta property="og:url" content="https://yangfan-witcher.github.io/page/2/index.html">
+  <meta name="description" content="故障情况:　　五一假期本来过得好好的，没想到3号收到系统发来的告警，线上有业务故障，同时prometheus发来告警,显示有6.7台节点宕机,幸好人就在家电脑就在身边,赶紧登陆到公司网络尝试直接ssh故障节点机器连接不上，ping节点不通，登陆vcenter webui 查看物理服务器，发现异常卡顿。这台服务器的所有虚拟机连接控制台全部黑屏，而且在vc上面对这台服务器的所有操作都异常的缓慢,这台e">
+<meta property="og:type" content="article">
+<meta property="og:title" content="五一假期服务器事故">
+<meta property="og:url" content="https://yangfan-witcher.github.io/2020/05/07/Server%20failure-2020-5-3/index.html">
 <meta property="og:site_name" content="杨 泛 walking">
+<meta property="og:description" content="故障情况:　　五一假期本来过得好好的，没想到3号收到系统发来的告警，线上有业务故障，同时prometheus发来告警,显示有6.7台节点宕机,幸好人就在家电脑就在身边,赶紧登陆到公司网络尝试直接ssh故障节点机器连接不上，ping节点不通，登陆vcenter webui 查看物理服务器，发现异常卡顿。这台服务器的所有虚拟机连接控制台全部黑屏，而且在vc上面对这台服务器的所有操作都异常的缓慢,这台e">
+<meta property="og:image" content="https://yangfan-witcher.github.io/img/dog1.jpg">
+<meta property="article:published_time" content="2020-05-06T16:07:57.000Z">
+<meta property="article:modified_time" content="2020-05-06T16:54:05.654Z">
 <meta property="article:author" content="fan yang">
+<meta property="article:tag" content="work">
+<meta property="article:tag" content="exsi">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yangfan-witcher.github.io/img/dog1.jpg">
 
-<link rel="canonical" href="https://yangfan-witcher.github.io/page/2/">
+<link rel="canonical" href="https://yangfan-witcher.github.io/2020/05/07/Server%20failure-2020-5-3/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false
+    isHome : false,
+    isPost : true
   };
 </script>
 
-  <title>杨 泛 walking</title>
+  <title>五一假期服务器事故 | 杨 泛 walking</title>
   
 
 
@@ -159,11 +167,11 @@
             
 
   <div class="posts-expand">
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/Docker%20Learning%20notes-1/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/05/07/Server%20failure-2020-5-3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/timg.jpg">
@@ -176,8 +184,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/18/Docker%20Learning%20notes-1/" class="post-title-link" itemprop="url">Docker学习笔记.1</a>
+          五一假期服务器事故
         </h1>
 
         <div class="post-meta">
@@ -188,7 +195,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-03-18 21:28:59 / 修改时间：21:39:34" itemprop="dateCreated datePublished" datetime="2020-03-18T21:28:59+08:00">2020-03-18</time>
+              <time title="创建时间：2020-05-07 00:07:57 / 修改时间：00:54:05" itemprop="dateCreated datePublished" datetime="2020-05-07T00:07:57+08:00">2020-05-07</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -196,7 +203,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">工作记录</span></a>
                 </span>
             </span>
 
@@ -211,177 +218,44 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>111</p>
+        <h1 id="故障情况"><a href="#故障情况" class="headerlink" title="故障情况:"></a>故障情况:</h1><p>　　五一假期本来过得好好的，没想到3号收到系统发来的告警，线上有业务故障，同时prometheus发来告警,显示有6.7台节点宕机,幸好人就在家电脑就在身边,赶紧登陆到公司网络尝试直接ssh故障节点机器连接不上，ping节点不通，登陆vcenter webui 查看物理服务器，发现异常卡顿。这台服务器的所有虚拟机连接控制台全部黑屏，而且在vc上面对这台服务器的所有操作都异常的缓慢,这台esxi系统的服务器肯定出了些问题。但是观察这台服务器上的虚拟机节点情况，down了一台redis节点,一台mysql节点,一台ES节点，三台业务探针服务器，以及一台用于调试的和生产无关的虚拟机。redis是哨兵集群，mysql做了主从和mha，es是分布式的讲道理宕机对线上业务应该不会有太大的影响，联系公司领导和开发,最后确定是业务一个环节没做redis的故障切换重连，一直在宕机的那台redis节点报错连接超时。</p>
+<h1 id="故障处理"><a href="#故障处理" class="headerlink" title="故障处理"></a>故障处理</h1><pre><code>因为物理服务器故障原因较难定位，恢复速度也需要时间，线上业务并无影响，优先处理业务故障。</code></pre><p>临时解决方法,对一直在尝试连接报错redis节点的业务进程批量重启（批量重复节点任务可以使用ansible的playbook）重新连接sentinel，建立redis连接。后续处理交给开发调试观察。<br>    物理服务器的排查比较困难，因为之前提到的操作异常缓慢，导致点击一下虚拟机切换视图都需要<br>卡半分钟，这时候发现这台esxi开启了ssh端口，于是用xshell连接。连接之后发现操作也是同样卡顿，ls操作直接卡死，这时候怀疑是不是磁盘出了问题，因为一般ls操作到磁盘IO文件，之前也遇到过类似的情况，实在没办法，reboot 之后半小时没收到存活的端口。怀疑没启动成功，准备联系领导通知机房人员重启服务器，突然这台esxi又重新加入了vc,看来重启时间有点长。之后在esxiweb上发现了一个情况，那就是有块vmfs-5的虚拟磁盘存在异常情况,一会可用一会报错不可用，一会显示总量0，一会显示可用0，一会又正常，甚是诡异，在esxi的shell上面也是如此，只要涉及到这块磁盘的io操作，终端就会失去响应，实在无奈遂卸载删除，web操作还各种报错，还好在shell上强制删除成功，本来想着把磁盘里面的虚拟机数据文件拷贝出来，但是无奈IO操作卡死。于是放弃。还好这台服务器不止一块盘，之后的时间在其他的磁盘上重建了宕机的故障节点（可以在vc上的其他服务器虚拟机克隆过来可以减少很大的前期操作）es节点，redis节点，加入非常简单，mysql节点重新加入主从，mha检测各节点正常之后重启工作。</p>
+<h1 id="反思与注意事项"><a href="#反思与注意事项" class="headerlink" title="反思与注意事项"></a>反思与注意事项</h1><p>1.服务器有多块磁盘,应该做raid盘,这台近两年前的服务器在当初装系统的时候没有做raid，是很大的失误，如果做了raid-5或者raid-1的话，可能这次故障就可以避免，不过说来也稀奇，我都不记得这台服务器当初是怎么安装系统的了，为什么会没有做raid我都记不清了。甚至我都怀疑是不是我自己安装的。。。。因为后面我安装的所有esxi系统，服务器都是做了raid-5的。不过这也是一个教训和经验。<br>2.虚拟机克隆开机一定要先取消网卡挂载，在编辑里把网卡的√取消,开机进系统改了IP之后再勾上。切记切记，不然会影响线上正常的业务，包括一些进程的配置文件中配置的监听绑定IP之类的。切记切记！！！克隆之后的配置文件记得还原成宕机的那台的配置文件。<br>3.mysql虚拟机克隆之后还需要特别注意的修改auto.conf的uuid,每台节点唯一,不然主从报错。<br>.后续继续观察…如有变化再度更新.</p>
+<p>原文作者：<a href="https://yangfan-witcher.github.io/about/">Yang Fan</a><br>原文链接：<a href="https://yangfan-witcher.github.io/2020/03/21/kafka-oom-2020-3-21/">https://yangfan-witcher.github.io/2020/03/21/kafka-oom-2020-3-21/</a></p>
+<!--添加图片-->
+<p><img src="/img/dog1.jpg" alt=""></p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/work/" rel="tag"># work</a>
+              <a href="/tags/exsi/" rel="tag"># exsi</a>
+          </div>
 
         
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/15/DNS%20address%20recommendation/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/timg.jpg">
-      <meta itemprop="name" content="fan yang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨 泛 walking">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/15/DNS%20address%20recommendation/" class="post-title-link" itemprop="url">DNS地址推荐</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-15 23:27:33" itemprop="dateCreated datePublished" datetime="2020-03-15T23:27:33+08:00">2020-03-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-18 21:39:30" itemprop="dateModified" datetime="2020-03-18T21:39:30+08:00">2020-03-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>境内公共DNS推荐<br>名称    首选地址    备选地址<br>114 DNS    114.114.114.114    114.114.115.115<br>阿里DNS    223.5.5.5    223.6.6.6<br>百度DNS    180.76.76.76<br>腾讯DNS    119.29.29.29    182.254.116.116<br>其余DNS在此不做推荐<br>境外公共DNS<br>名称    首选地址    备选地址<br>Cloudflare &amp; APNIC    1.1.1.1    1.0.0.1<br>谷歌DNS    8.8.8.8    8.8.4.4<br>OpenDNS    208.67.222.222    208.67.220.220<br>微软DNS    4.2.2.1    4.2.2.2<br>其余DNS在此不做推荐<br>无污染DNS<br>名称    首选地址    备选地址<br>PdomoDNS    101.132.183.99    193.112.15.186<br>Pure DNS    123.207.13.111    123.207.137.88<br>FunDNS    119.23.248.241    106.14.150.27<br>BAIDNS    106.14.152.170    223.113.97.99</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
         
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/15/First-Post/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/timg.jpg">
-      <meta itemprop="name" content="fan yang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨 泛 walking">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/15/First-Post/" class="post-title-link" itemprop="url">First-Post</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-15 23:06:02" itemprop="dateCreated datePublished" datetime="2020-03-15T23:06:02+08:00">2020-03-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-18 21:40:27" itemprop="dateModified" datetime="2020-03-18T21:40:27+08:00">2020-03-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%BF%83%E6%83%85%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">心情随笔</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p> &emsp;&emsp;呦西,捣鼓了一下hexo,新博客上线了,之前是在腾讯云自己买的服务器,买的域名搭的Wordpress博客,写了陆陆续续大概有一年半，因为经费和管理的问题,最后服务器到期了也没续费,当时因为工作也是特别的忙,每天也是下班直接倒头就睡,结果服务器到期数据也忘了取（当时也有段时间没更新博客了,都快忘了有这茬）,结果里面写的一些文档包括个人的日记周记都没了,属实有点可惜。<br> &emsp;&emsp;最近网上看到GitHub也有免费的博客,就想着到这里写写试试,关键是不需要钱,哈哈.所以这是我在这里写下的第一篇博客。</p>
-
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/22/prometheus-grafana-1/" rel="prev" title="Prometheus+Grafana整套监控系统部署方案(1)-安装部署prometheus">
+      <i class="fa fa-chevron-left"></i> Prometheus+Grafana整套监控系统部署方案(1)-安装部署prometheus
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
   
 
   </div>
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-  </nav>
-
 
 
           </div>
@@ -432,6 +306,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#故障情况"><span class="nav-number">1.</span> <span class="nav-text">故障情况:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#故障处理"><span class="nav-number">2.</span> <span class="nav-text">故障处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#反思与注意事项"><span class="nav-number">3.</span> <span class="nav-text">反思与注意事项</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

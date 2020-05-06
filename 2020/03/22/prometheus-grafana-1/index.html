@@ -22,15 +22,16 @@
 
   <meta name="description" content="总览介绍　　Prometheus是最初在SoundCloud上构建的开源系统监视和警报工具包 。自2012年成立以来，许多公司和组织都采用了Prometheus，该项目拥有非常活跃的开发人员和用户社区。现在，它是一个独立的开源项目，并且独立于任何公司进行维护。为了强调这一点并阐明项目的治理结构，Prometheus 在2016年加入了 Cloud Native Computing Foundat">
 <meta property="og:type" content="article">
-<meta property="og:title" content="prometheus+grafana整套监控系统部署方案-安装部署prometheus">
+<meta property="og:title" content="Prometheus+Grafana整套监控系统部署方案(1)-安装部署prometheus">
 <meta property="og:url" content="https://yangfan-witcher.github.io/2020/03/22/prometheus-grafana-1/index.html">
 <meta property="og:site_name" content="杨 泛 walking">
 <meta property="og:description" content="总览介绍　　Prometheus是最初在SoundCloud上构建的开源系统监视和警报工具包 。自2012年成立以来，许多公司和组织都采用了Prometheus，该项目拥有非常活跃的开发人员和用户社区。现在，它是一个独立的开源项目，并且独立于任何公司进行维护。为了强调这一点并阐明项目的治理结构，Prometheus 在2016年加入了 Cloud Native Computing Foundat">
 <meta property="og:image" content="https://yangfan-witcher.github.io/img/prometheus1.png">
 <meta property="og:image" content="https://yangfan-witcher.github.io/img/prometheus2.png">
-<meta property="og:image" content="https://yangfan-witcher.github.io/img/name.jpg">
+<meta property="og:image" content="https://yangfan-witcher.github.io/img/prometheus3.png">
+<meta property="og:image" content="https://yangfan-witcher.github.io/img/prometheus4.png">
 <meta property="article:published_time" content="2020-03-22T15:45:10.000Z">
-<meta property="article:modified_time" content="2020-03-22T16:16:47.796Z">
+<meta property="article:modified_time" content="2020-03-23T16:12:08.514Z">
 <meta property="article:author" content="fan yang">
 <meta property="article:tag" content="prometheus">
 <meta property="article:tag" content="linux">
@@ -49,7 +50,7 @@
   };
 </script>
 
-  <title>prometheus+grafana整套监控系统部署方案-安装部署prometheus | 杨 泛 walking</title>
+  <title>Prometheus+Grafana整套监控系统部署方案(1)-安装部署prometheus | 杨 泛 walking</title>
   
 
 
@@ -186,7 +187,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          prometheus+grafana整套监控系统部署方案-安装部署prometheus
+          Prometheus+Grafana整套监控系统部署方案(1)-安装部署prometheus
         </h1>
 
         <div class="post-meta">
@@ -203,7 +204,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 00:16:47" itemprop="dateModified" datetime="2020-03-23T00:16:47+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-24 00:12:08" itemprop="dateModified" datetime="2020-03-24T00:12:08+08:00">2020-03-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -228,9 +229,11 @@
       
         <!--添加图片-->
 <h1 id="总览介绍"><a href="#总览介绍" class="headerlink" title="总览介绍"></a>总览介绍</h1><p>　　Prometheus是最初在SoundCloud上构建的开源系统监视和警报工具包 。自2012年成立以来，许多公司和组织都采用了Prometheus，该项目拥有非常活跃的开发人员和用户社区。现在，它是一个独立的开源项目，并且独立于任何公司进行维护。为了强调这一点并阐明项目的治理结构，Prometheus 在2016年加入了 Cloud Native Computing Foundation，这是继Kubernetes之后的第二个托管项目。<br>　　下图是摘自prometheus官方文档的prometheus整体监控系统运行框架:<br><img src="/img/prometheus1.png" alt=""><br>    拆分整体分析一下几个重要组件的功能:<br>    1.Prometheus-prometheus采集到的监控数据以metric（指标）形式保存在时序数据库中（TSDB)并提供查询接口,数据库可存储在本地也可以存储在远程。<br>    2.exporters-用于暴露已有的第三方服务的 metrics 以pull方式提供给 Prometheus。<br>    3.alertmanager-从 Prometheus接受告警alerts,进行分组路由发出警告,接受者包括e-mail,webhook等<br>    4.grafana-专业的可视化开源软件,支持导入prometheus数据源,对指标进行详细的可视化图表展示。</p>
-<h1 id="安装prometheus"><a href="#安装prometheus" class="headerlink" title="安装prometheus"></a>安装prometheus</h1><p>首先安装,直接前往官网下载tar包安装最为快速。官方也提供docker镜像安装,如果对docker比较熟悉,可以采用docker,本文档采用二进制包安装<br>官网下载地址 <a href="https://prometheus.io/download/" target="_blank" rel="noopener">https://prometheus.io/download/</a><br><img src="/img/prometheus2.png" alt=""></p>
-<p><img src="/img/name.jpg" alt=""></p>
-
+<h1 id="网络规划"><a href="#网络规划" class="headerlink" title="网络规划"></a>网络规划</h1><p>　　我用两台centos7虚拟机做最小的模拟实验<br>    192.168.88.128 prometheus+alertmanager+grafana<br>    192.168.88.129 exporter</p>
+<h1 id="安装prometheus"><a href="#安装prometheus" class="headerlink" title="安装prometheus"></a>安装prometheus</h1><p>　　首先安装,直接前往官网下载tar包安装最为快速。官方也提供docker镜像安装,如果对docker比较熟悉,可以采用docker,本文档采用二进制包安装官网下载地址 <a href="https://prometheus.io/download/,顺便把要用到的alertmanager组件和node_exporter组件也下载了" target="_blank" rel="noopener">https://prometheus.io/download/,顺便把要用到的alertmanager组件和node_exporter组件也下载了</a><br><img src="/img/prometheus2.png" alt=""><br><img src="/img/prometheus3.png" alt=""><br><img src="/img/prometheus4.png" alt=""><br>把prometheus和alertmanager的安装包上传到192.168.88.128虚拟机的/home/soft目录下,node_exporter上传到129的/home/soft目录下<br>解压压缩包到/home目录下<br>tar zxvf prometheus-2.17.0-rc.4.linux-amd64.tar.gz -C /home<br>更改文件夹名字为prometheus<br>mv /home/prometheus-2.17.0-rc.4.linux-amd64 prometheus<br>进入目录查看目录结构<br>cd /home/prometheus;ls</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@localhost</span> prometheus]<span class="meta"># cd /home/prometheus<span class="comment">;ls</span></span></span><br><span class="line">console_libraries  consoles  LICENSE  NOTICE  prometheus  prometheus.yml  promtool  tsdb</span><br></pre></td></tr></table></figure>
+<p>prometheus 可执行文件<br>prometheus.yml 默认配置文件<br>编辑默认配置文件<br>vim prometheus.yml</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># my global config</span></span><br><span class="line">global:</span><br><span class="line">  scrape_interval:     15s # <span class="builtin-name">Set</span> the scrape interval <span class="keyword">to</span> every 15 seconds.<span class="built_in"> Default </span>is every 1 minute.</span><br><span class="line">  evaluation_interval: 15s # Evaluate rules every 15 seconds. The<span class="built_in"> default </span>is every 1 minute.</span><br><span class="line">  # scrape_timeout is <span class="builtin-name">set</span> <span class="keyword">to</span> the global<span class="built_in"> default </span>(10s).</span><br><span class="line"></span><br><span class="line"><span class="comment">##global 全局配置,配置之后为下方各节点的默认参数,在配置具体监控节点时可覆盖配置</span></span><br><span class="line"><span class="comment">##scrape_interval 采集时间间隔,prometheus定时主动pull获取数据,网络资源充足时可减小该值,网络状况不良可增大该值,如要不同节点设置不同拉取时间可在各自Job下方配置</span></span><br><span class="line"><span class="comment">##evaluation_interval 告警时间间隔,每隔固定时间检测一次告警rule规则匹配</span></span><br><span class="line"><span class="comment">##scrape_timeout 采集数据超时时间,同采集间隔,网络状况不良可增大该值</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Alertmanager configuration</span></span><br><span class="line">alerting:</span><br><span class="line">  alertmanagers:</span><br><span class="line">  - static_configs:</span><br><span class="line">    - targets:</span><br><span class="line">      # - alertmanager:9093</span><br><span class="line"></span><br><span class="line"><span class="comment"># Load rules once and periodically evaluate them according to the global 'evaluation_interval'.</span></span><br><span class="line">rule_files:</span><br><span class="line">  # - <span class="string">"first_rules.yml"</span></span><br><span class="line">  # - <span class="string">"second_rules.yml"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># A scrape configuration containing exactly one endpoint to scrape:</span></span><br><span class="line"><span class="comment"># Here it's Prometheus itself.</span></span><br><span class="line">scrape_configs:</span><br><span class="line">  # The job name is added as a label `<span class="attribute">job</span>=&lt;job_name&gt;` <span class="keyword">to</span> any timeseries scraped <span class="keyword">from</span> this config.</span><br><span class="line">  - job_name: <span class="string">'prometheus'</span></span><br><span class="line"></span><br><span class="line">    # metrics_path defaults <span class="keyword">to</span> <span class="string">'/metrics'</span></span><br><span class="line">    # scheme defaults <span class="keyword">to</span> <span class="string">'http'</span>.</span><br><span class="line"></span><br><span class="line">    static_configs:</span><br><span class="line">    - targets: [<span class="string">'localhost:9090'</span>]</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -252,7 +255,10 @@
     <a href="/2020/03/22/centos7-Optimization-script/" rel="prev" title="linux下centos7系统简单优化shell脚本">
       <i class="fa fa-chevron-left"></i> linux下centos7系统简单优化shell脚本
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/07/Server%20failure-2020-5-3/" rel="next" title="五一假期服务器事故">
+      五一假期服务器事故 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -312,7 +318,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#总览介绍"><span class="nav-number">1.</span> <span class="nav-text">总览介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装prometheus"><span class="nav-number">2.</span> <span class="nav-text">安装prometheus</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#总览介绍"><span class="nav-number">1.</span> <span class="nav-text">总览介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络规划"><span class="nav-number">2.</span> <span class="nav-text">网络规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装prometheus"><span class="nav-number">3.</span> <span class="nav-text">安装prometheus</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -328,7 +334,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -341,7 +347,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
