@@ -163,6 +163,149 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/06/27/kafka-dell-2020-6-24/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/timg.jpg">
+      <meta itemprop="name" content="fan yang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨 泛 walking">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/27/kafka-dell-2020-6-24/" class="post-title-link" itemprop="url">kafka的一个坑6.24</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-06-27 20:11:25 / 修改时间：20:22:47" itemprop="dateCreated datePublished" datetime="2020-06-27T20:11:25+08:00">2020-06-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">工作记录</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>-上上周的一个深坑记录，kafka集群的_comsour offset 主题，存放kafka集群元数据及偏移量的主题，默认副本竟然是1… 配置文件内这个主题的副本数和 主题副本数的配置项不是同一项，所以没法生效副本2的配置。  副本1的话，集群的意义就不存在了。单台故障，_comsour offset 分区故障集群自然要出大问题。利用json文件重写分区情况，已达到扩充副本为2的方案（如果是删减副本，也可以用），json文件可以用kafka自带脚本生成，也可以在kafka-managerweb上直接操作，也可以依照格式手写，手写结构顺序更清晰，脚本自动生成的貌似分区顺序是乱的。<br>原文作者：<a href="https://yangfan-witcher.github.io/about/">Yang Fan</a><br>原文链接：<a href="https://yangfan-witcher.github.io/2020/06/27/kafka-dell-2020-6-24/">https://yangfan-witcher.github.io/2020/06/27/kafka-dell-2020-6-24/</a></p>
+<!--添加图片-->
+<p><img src="/img/dog1.jpg" alt=""></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/06/27/once%20failure-2020-6-23/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/timg.jpg">
+      <meta itemprop="name" content="fan yang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨 泛 walking">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/27/once%20failure-2020-6-23/" class="post-title-link" itemprop="url">工作记录esxi6.24</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-06-27 20:11:25 / 修改时间：20:23:06" itemprop="dateCreated datePublished" datetime="2020-06-27T20:11:25+08:00">2020-06-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">工作记录</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="故障情况"><a href="#故障情况" class="headerlink" title="故障情况:"></a>故障情况:</h1><p>　　月初服务器单块磁盘故障，未做raid， 故障现象，不定时脱离esxi主机，掉盘，重启esxi主机又能重新连上磁盘，观察监控似乎是没做raid，导致几台虚拟机的读写，包括es的数据节点都落在了这块盘上，负载过大磁盘与esxi主机的延迟过高，达到了十几多秒，引起的掉盘。解决方案肯定是主机重做raid，这就意味着数据得被全部抹除，那么首先得把这台服务器上的虚拟机数据备份，关键是两台es数据节点，虚拟机直接迁移或者数据文件直接拷贝不太现实，几百个G得迁移一年，而且那样磁盘负载会非常高，磁盘又会掉盘， 人在机房大致想了下方案还是用es集群的分片迁移来实现，以下是那天具体方案的工作记录</p>
+<h1 id="故障处理"><a href="#故障处理" class="headerlink" title="故障处理"></a>故障处理</h1><p>–es集群设置恢复分片策略，调低恢复带宽，调低并发恢复分片数，索引数，关闭副本恢复，仅恢复主分片<br>–故障节点重启上线，等待主分片缓慢恢复至es集群。观察虚拟机磁盘io情况，服务器磁盘延迟情况<br>–主分片恢复之后，迁移主分片至其他节点，副本分片先不去管（期间其他es节点不能再次发生故障，否则增加方案难度），这一个步骤最关键，只要把故障节点上的主分片都迁移到了其他节点上，这个故障节点就可以暂时下线了。<br>–分片全部迁移之后，节点下线，服务器关机，进bios，组raid<br>–组完raid安装系统，选用了esxi6.7u2镜像安装发现在系统安装步骤读取不到raid磁盘，回bios取消raid，再次安装测试，可以识别到每块单盘，应该是镜像驱动的问题，临时百度搜索了一下，没找到戴尔定制的镜像版本，但是发现官网esxi6.7u3版本貌似解决了很多驱动问题，尝试下载安装（在客户机房笔记本没有网络，用的手机热点，速度也不快，还吹着大空调，哎煎熬）<br>–重新制作一个6.7u3镜像启动盘，再次安装，发现已经可以读到raid磁盘了，本以为搞定了，结果没想到报错，gpt分区表有问题？具体报错已经不太记得请，大致是说分区表空间问题，做了个pe，连上服务器把磁盘分区全都清了一遍，再次安装，终于成功，系统安装之后简单配置下网络，重新加入vcenter<br>–之后新建虚拟机，安装es（可以直接从别的es节点scp目录过来，不拉数据目录就行。）更改配置文件，重新启动上线<br>–es集群设置 开启分片副本恢复，开启集群分片自动均衡功能，这一步有点长，不过是集群自身可以实现的功能，不需要手工介入，这时候已经从早上10点过来机房忙到晚上快7.8点了。打了车回家，，之后观察集群分片是否全部恢复，集群健康是否green，分片是否已经均衡发布。故障基本排除</p>
+<h1 id="反思与注意事项"><a href="#反思与注意事项" class="headerlink" title="反思与注意事项"></a>反思与注意事项</h1><p>–这次的教训就是服务器硬件这块一定要提早做好方案，磁盘一定要做raid，不做raid上环境，esxi的虚拟磁盘叠加的性能太差，而且根本没有磁盘冗余。<br>–还有一点去机房要穿外套</p>
+<p>原文作者：<a href="https://yangfan-witcher.github.io/about/">Yang Fan</a><br>原文链接：<a href="https://yangfan-witcher.github.io/2020/06/27/once%20failure-2020-6-23/">https://yangfan-witcher.github.io/2020/06/27/once%20failure-2020-6-23/</a></p>
+<!--添加图片-->
+<p><img src="/img/dog1.jpg" alt=""></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/05/07/Server%20failure-2020-5-3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -741,140 +884,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/Prometheus%20Learning%20notes-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/timg.jpg">
-      <meta itemprop="name" content="fan yang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨 泛 walking">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/18/Prometheus%20Learning%20notes-1/" class="post-title-link" itemprop="url">Prometheus学习笔记.1</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-03-18 21:38:32 / 修改时间：21:42:01" itemprop="dateCreated datePublished" datetime="2020-03-18T21:38:32+08:00">2020-03-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Prometheus/" itemprop="url" rel="index"><span itemprop="name">Prometheus</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://yangfan-witcher.github.io/2020/03/18/Kafka%20Learning%20notes-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/timg.jpg">
-      <meta itemprop="name" content="fan yang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨 泛 walking">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/18/Kafka%20Learning%20notes-1/" class="post-title-link" itemprop="url">Kafka学习笔记.1</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-03-18 21:38:16 / 修改时间：21:40:51" itemprop="dateCreated datePublished" datetime="2020-03-18T21:38:16+08:00">2020-03-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kafka/" itemprop="url" rel="index"><span itemprop="name">Kafka</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -947,7 +956,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
